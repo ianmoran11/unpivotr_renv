@@ -109,11 +109,11 @@ behead.data.frame <- function(cells, direction, name, values = NULL,
                               types = data_type, formatters = list(),
                               drop_na = TRUE) {
   behead_if.data.frame(cells,
-    direction = direction,
-    name = !!rlang::ensym(name),
-    values = !!rlang::enexpr(values),
-    types = !!rlang::ensym(types),
-    formatters = formatters, drop_na = drop_na
+                       direction = direction,
+                       name = !!rlang::ensym(name),
+                       values = !!rlang::enexpr(values),
+                       types = !!rlang::ensym(types),
+                       formatters = formatters, drop_na = drop_na
   )
 }
 
@@ -180,13 +180,31 @@ behead_if.data.frame <- function(cells, ..., direction, name, values = NULL,
 
 # Construct a filter expression for stripping a header from a pivot table
 direction_filter <- function(direction) {
+  
   direction <- substr(direction, 1L, 1L)
-  dplyr::case_when(
-    direction == "u" ~ rlang::expr(.data$row == min(.data$row)),
-    direction == "r" ~ rlang::expr(.data$col == max(.data$col)),
-    direction == "d" ~ rlang::expr(.data$row == max(.data$row)),
-    direction == "l" ~ rlang::expr(.data$col == min(.data$col))
-  )
+  
+  if(direction %in% c("u","r","d","l")){
+    return(
+      dplyr::case_when(
+        direction == "u" ~ rlang::expr(.data$row == min(.data$row)),
+        direction == "r" ~ rlang::expr(.data$col == max(.data$col)),
+        direction == "d" ~ rlang::expr(.data$row == max(.data$row)),
+        direction == "l" ~ rlang::expr(.data$col == min(.data$col))
+      )
+    )
+  }else{
+    
+    dplyr::case_when(
+      direction == "N" ~ rlang::expr(.data$row == min(.data$row)),
+      direction == "E" ~ rlang::expr(.data$col == max(.data$col)),
+      direction == "S" ~ rlang::expr(.data$row == max(.data$row)),
+      direction == "W" ~ rlang::expr(.data$col == min(.data$col))
+    )
+    
+  }
+  
+  
+  
 }
 
 # Check that a given direction is a supported compass direction

@@ -231,3 +231,4 @@ non-tabular data from spreadsheets into tabular structures automatically
 via some clever algorithms.
 [unpivotr](https://github.com/nacnudus/unpivotr) differs by being less
 magic, and equipping you to express what you want to do.
+>>>>>>> master

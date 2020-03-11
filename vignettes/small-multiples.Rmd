@@ -7,8 +7,10 @@ output:
     toc: true
 vignette: >
   %\VignetteIndexEntry{Small Multiples}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 This vignette for the [unpivotr](https://github.com/nacnudus/unpivotr) package
@@ -64,7 +66,7 @@ above 14 and below 56, and columns beyond 20.
 ```{r}
 cells <-
   xlsx_cells(path) %>%
-  dplyr::filter(!is_blank, between(row, 14L, 56L), col <= 20) %>%
+  filter(!is_blank, between(row, 14L, 56L), col <= 20) %>%
   select(row, col, data_type, numeric, character, date)
 ```
 
@@ -83,7 +85,7 @@ title cells.  The title cells are the top-left corner cell of each table.
 
 ```{r}
 title <-
-  dplyr::filter(cells, character == "Fixed Price") %>%
+  filter(cells, character == "Fixed Price") %>%
   select(row, col) %>%
   mutate(row = row - 1L) %>%
   inner_join(cells, by = c("row", "col"))
@@ -125,6 +127,8 @@ on the left-hand side of the spreadsheet.  The following code incorporates these
 into the final dataset.
 
 ```{r}
+
+library(dplyr)
 row_headers <-
   cells %>%
   dplyr::filter(between(row, 17, 56), between(col, 2, 4)) %>%
@@ -172,7 +176,7 @@ row_headers <-
   select(row, row_header)
 
 titles <-
-  dplyr::filter(cells, character == "Fixed Price") %>%
+  filter(cells, character == "Fixed Price") %>%
   select(row, col) %>%
   mutate(row = row - 1L) %>%
   inner_join(cells, by = c("row", "col"))

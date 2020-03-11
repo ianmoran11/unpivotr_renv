@@ -58,8 +58,10 @@ frame, using the {readxl} package.
 
 ```{r tidy-readxl}
 library(readxl) # for read_excel()
+library(devtools)
+load_all()
 
-hp_xlsx <- system.file("extdata/harry-potter.xlsx", package = "unpivotr")
+hp_xlsx <- unpivotr_example("harry-potter.xlsx")
 
 tidy <- read_excel(hp_xlsx, sheet = "tidy")
 
@@ -158,7 +160,7 @@ indent <- formats$local$alignment$indent
 
 tidied <-
   cells %>%
-  filter(!is_blank) %>%
+  dplyr::filter(!is_blank) %>%
   behead("up-left", "dormitory") %>%
   behead("up", "name") %>%
   behead_if(indent[local_format_id] == 0,
@@ -209,14 +211,14 @@ This allows you to do some fancy tricks, like filter for all the numeric cells.
 
 ```{r filter-numeric}
 cells %>%
-  filter(data_type == "numeric")
+  dplyr::filter(data_type == "numeric")
 ```
 
 Or you could filter for a particular cell by its row and column position.
 
 ```{r filter-position}
 cells %>%
-  filter(row == 2, col == 4)
+  dplyr::filter(row == 2, col == 4)
 ```
 
 And you can filter out all 'blank' cells.  A cell is 'blank' if it has
@@ -225,7 +227,7 @@ should discard them.
 
 ```{r filter-blank}
 cells %>%
-  filter(!is_blank)
+  dplyr::filter(!is_blank)
 ```
 
 
@@ -256,7 +258,7 @@ longer required.
 
 ```{r behead-row-1}
 cells %>%
-  filter(!is_blank) %>%
+  dplyr::filter(!is_blank) %>%
   behead("up-left", "dormitory")
 ```
 
@@ -287,7 +289,7 @@ knitr::include_graphics(here("vignettes/images/untidy-header-row-1.png"))
 
 ```{r up-right}
 cells %>%
-  filter(!is_blank) %>%
+  dplyr::filter(!is_blank) %>%
   behead("up-right", "dormitory")
 ```
 
@@ -309,7 +311,7 @@ knitr::include_graphics("images/untidy-header-row-2.png")
 
 ```{r}
 cells %>%
-  filter(!is_blank) %>%
+  dplyr::filter(!is_blank) %>%
   behead("up-left", "dormitory") %>%
   behead("up", "name")
 ```
@@ -363,7 +365,7 @@ formats <- xlsx_formats(hp_xlsx) # load the format lookup table from the file
 indent <- formats$local$alignment$indent # find the 'indent' property
 
 cells %>%
-  filter(!is_blank) %>%
+  dplyr::filter(!is_blank) %>%
   behead("up-left", "dormitory") %>%
   behead("up", "name") %>%
   behead_if(indent[local_format_id] == 0,
@@ -382,7 +384,7 @@ indent <- formats$local$alignment$indent
 bold <- formats$local$font$bold # find the 'bold' property
 
 cells %>%
-  filter(!is_blank) %>%
+  dplyr::filter(!is_blank) %>%
   behead("up-left", "dormitory") %>%
   behead("up", "name") %>%
   behead_if(indent[local_format_id] == 0, # First rule
@@ -405,7 +407,7 @@ knitr::include_graphics("images/untidy-header-col-2.png")
 
 ```{r}
 cells %>%
-  filter(!is_blank) %>%
+  dplyr::filter(!is_blank) %>%
   behead("up-left", "dormitory") %>%
   behead("up", "name") %>%
   behead_if(indent[local_format_id] == 0,
@@ -424,7 +426,7 @@ the column `other` for?  For the value `"10 - really?"`.
 
 ```{r cleanup}
 cells %>%
-  filter(!is_blank) %>%
+  dplyr::filter(!is_blank) %>%
   behead("up-left", "dormitory") %>%
   behead("up", "name") %>%
   behead_if(indent[local_format_id] == 0,
@@ -453,7 +455,7 @@ indent <- formats$local$alignment$indent
 
 tidied <-
   cells %>%
-  filter(!is_blank) %>%
+  dplyr::filter(!is_blank) %>%
   behead("up-left", "dormitory") %>%
   behead("up", "name") %>%
   behead_if(indent[local_format_id] == 0,

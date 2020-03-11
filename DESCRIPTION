@@ -17,18 +17,21 @@ Encoding: UTF-8
 LazyData: true
 Imports:
     methods,
+    stringr,
     rlang,
     magrittr,
     dplyr,
     forcats,
     purrr,
-    tidyr,
     pillar,
     tibble (>= 2.1.1),
     cellranger,
     xml2,
     tidyselect,
-    vctrs
+    vctrs,
+    tidyxl,
+    ggplot2,
+    tidyr
 URL: https://github.com/nacnudus/unpivotr
 BugReports: https://github.com/nacnudus/unpivotr/issues
 RoxygenNote: 6.1.1
@@ -36,15 +39,19 @@ Suggests:
     knitr,
     rmarkdown,
     readr,
-    tidyxl,
     readxl,
-    stringr,
     htmltools,
     rvest,
     selectr,
     DT,
     testthat,
     covr,
-    here
+    here,
+    devtools,
+    plotly
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
+
+
+
+

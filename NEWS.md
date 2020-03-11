@@ -157,7 +157,3 @@ original data types of table cells and to support HTML tables.
 
 # unpivotr 0.0.0.9000
 
-* Added a `NEWS.md` file to track changes to the package.
-
-
-
